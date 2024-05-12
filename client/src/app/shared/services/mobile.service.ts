@@ -36,7 +36,7 @@ export class MobileService {
   }
 
   deleteMobile(modelName: string) {
-    return this.http.delete(`http://localhost:5000/app/deleteMobile/${modelName}`);
+    return this.http.delete('http://localhost:5000/app/deleteMobile/' + modelName, {withCredentials: true});
   }
 
   initMobiles() {

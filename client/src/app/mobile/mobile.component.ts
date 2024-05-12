@@ -46,19 +46,7 @@ export class MobileComponent implements OnInit {
 
     if (modelName !== null) {
       this.modelName = modelName;
-      this.mobileService.getMobile(this.modelName).subscribe({
-        next: (mobile) => {
-          if (mobile) {
-            this.mobile = mobile;
-            console.log(mobile);
-          } else {
-            this.router.navigateByUrl('/mobiles');
-          }
-        }, error: (err) => {
-          console.log(err);
-          this.router.navigateByUrl('/mobiles');
-        }
-      });
+      this.updateMobileData();
     } else {
       this.router.navigateByUrl('/mobiles');
     }
@@ -68,17 +56,38 @@ export class MobileComponent implements OnInit {
       text: [''],
     });
 
+    this.updateReviews();
+
+    this.updateMobileForm = this.formBuilder.group({
+      price: ['', [Validators.required, Validators.min(0)]],
+      stock: ['', [Validators.required, Validators.min(0)]]
+    });
+  }
+
+  updateMobileData() {
+    this.mobileService.getMobile(this.modelName).subscribe({
+      next: (mobile) => {
+        if (mobile) {
+          this.mobile = mobile;
+          console.log(mobile);
+        } else {
+          console.log(mobile);
+          this.router.navigateByUrl('/mobiles');
+        }
+      }, error: (err) => {
+        console.log(err);
+        this.router.navigateByUrl('/mobiles');
+      }
+    });
+  }
+
+  updateReviews() {
     this.reviewService.getReviewsByMobile(this.modelName).subscribe({
       next: (reviews) => {
         this.reviews = reviews;
       }, error: (err) => {
         console.log(err);
       }
-    });
-
-    this.updateMobileForm = this.formBuilder.group({
-      price: ['', [Validators.required, Validators.min(0)]],
-      stock: ['', [Validators.required, Validators.min(0)]]
     });
   }
 
@@ -87,6 +96,7 @@ export class MobileComponent implements OnInit {
       this.cartService.addToCart(this.modelName, 1).subscribe({
         next: (data) => {
           console.log(data);
+          this.updateMobileData();
         }, error: (err) => {
           console.log(err);
         }
@@ -99,6 +109,7 @@ export class MobileComponent implements OnInit {
   deleteMobile() {
     this.mobileService.deleteMobile(this.modelName).subscribe({
       next: (data) => {
+        console.log(data);
         this.router.navigateByUrl('/mobiles');
       }, error: (err) => {
         console.log(err);
@@ -114,6 +125,7 @@ export class MobileComponent implements OnInit {
       this.reviewService.addReview(this.modelName, score, text).subscribe({
         next: (data) => {
           console.log(data);
+          this.updateReviews()
         }, error: (err) => {
           console.log(err);
         }

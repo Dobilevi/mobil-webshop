@@ -14,6 +14,7 @@ import {
 } from "@angular/material/table";
 import {RouterLink} from "@angular/router";
 import {MatButton, MatFabButton} from "@angular/material/button";
+import {update} from "@angular-devkit/build-angular/src/tools/esbuild/angular/compilation/parallel-worker";
 
 @Component({
   selector: 'app-cart',
@@ -49,6 +50,10 @@ export class CartComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.update();
+  }
+
+  update() {
     this.cartService.getCart().subscribe({
       next: (data: CartItem[]) => {
         this.cart = data;
@@ -62,6 +67,7 @@ export class CartComponent implements OnInit {
     this.cartService.removeFromCart(cartItem).subscribe({
       next: (data) => {
         console.log(data);
+        this.update();
       }, error: (err) => {
         console.log(err);
       }
@@ -72,6 +78,7 @@ export class CartComponent implements OnInit {
     this.cartService.purchase(this.cart).subscribe({
       next: (data) => {
         console.log(data);
+        this.update();
       }, error: (err) => {
         console.log(err);
       }

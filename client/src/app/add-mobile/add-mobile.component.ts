@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {MobileService} from "../shared/services/mobile.service";
 import {MatButton} from "@angular/material/button";
 import {FlexModule} from "@angular/flex-layout";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-add-mobile',
@@ -16,6 +17,7 @@ import {FlexModule} from "@angular/flex-layout";
   styleUrl: './add-mobile.component.scss'
 })
 export class AddMobileComponent implements OnInit {
+  router = inject(Router);
   mobileForm!: FormGroup;
 
   constructor(private formBuilder: FormBuilder, private mobileService: MobileService) {
@@ -38,6 +40,7 @@ export class AddMobileComponent implements OnInit {
       this.mobileService.uploadMobile(this.mobileForm.value).subscribe({
         next: (data) => {
           console.log(data);
+          this.router.navigateByUrl('/mobile/' + this.mobileForm.get('modelName')?.value);
         }, error: (err) => {
           console.log(err);
         }

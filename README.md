@@ -15,11 +15,19 @@ sudo docker restart mobil_webshop_mongo_container
 
 # Server
 
+cd server
+
+npm install
+
 npm run build
 
 npm run start
 
 # Client
+
+cd client
+
+npm install
 
 ng serve
 
@@ -37,4 +45,4 @@ Password: admin
 
 E-Mail: ivan@test.com
 
-Password: passpass
+Password: password

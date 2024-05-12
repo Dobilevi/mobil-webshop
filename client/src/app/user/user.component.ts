@@ -80,6 +80,7 @@ export class UserComponent implements OnInit {
   logout() {
     this.authenticationService.logout().subscribe({
       next: (data) => {
+        this.authenticationService.update();
         this.router.navigateByUrl('/login');
       }, error: (err) => {
         console.log(err);
@@ -97,6 +98,7 @@ export class UserComponent implements OnInit {
             next: (data) => {
               this.authenticationService.logout().subscribe({
                 next: (data) => {
+                  this.authenticationService.update();
                   this.router.navigateByUrl('/login');
                 }, error: (err) => {
                   console.log(err);
