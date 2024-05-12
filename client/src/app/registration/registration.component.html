@@ -1,0 +1,17 @@
+
+<div>
+  <h1>
+    Registration
+  </h1>
+  <form [formGroup]="registrationForm" (ngSubmit)="onSubmit()">
+    <input formControlName="username" type="text" placeholder="Username" required/>
+    <input formControlName="email" type="email" placeholder="E-Mail" required/>
+    <input formControlName="name" type="text" placeholder="Name" required/>
+    <input formControlName="address" type="text" placeholder="Address" required/>
+    <input formControlName="password" type="password" placeholder="Password" required/>
+    <input formControlName="confirmPassword" type="password" placeholder="Confirm password" required/>
+    <button mat-raised-button color="primary" type="submit">
+      Register
+    </button>
+  </form>
+</div>

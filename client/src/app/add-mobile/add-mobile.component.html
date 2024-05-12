@@ -1,0 +1,35 @@
+
+<div>
+  <h2>
+    Add new mobile
+  </h2>
+  <form [formGroup]="mobileForm" (ngSubmit)="onSubmit()">
+    <label fxLayout fxLayoutAlign="space-between center">
+      Name:
+      <input formControlName="name" type="text" />
+    </label>
+    <label fxLayout fxLayoutAlign="space-between center">
+      Model name:
+      <input formControlName="modelName" type="text" />
+    </label>
+    <label fxLayout fxLayoutAlign="space-between center">
+      Company:
+      <input formControlName="company" type="text" />
+    </label>
+    <label fxLayout fxLayoutAlign="space-between center">
+      Picture:
+      <input formControlName="picture" type="text" />
+    </label>
+    <label fxLayout fxLayoutAlign="space-between center">
+      Price (Ft):
+      <input formControlName="price" type="number" />
+    </label>
+    <label fxLayout fxLayoutAlign="space-between center">
+      Stock:
+      <input formControlName="stock" type="number" />
+    </label>
+    <button mat-raised-button color="primary" type="submit">
+      Submit
+    </button>
+  </form>
+</div>

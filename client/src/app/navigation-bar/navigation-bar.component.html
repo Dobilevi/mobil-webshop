@@ -1,0 +1,53 @@
+
+<mat-toolbar color="primary">
+  <div>
+    <ul>
+      <li>
+        <a routerLink="/mobiles">
+          Mobiles
+        </a>
+      </li>
+      <li *ngIf="!this.authenticationService.isLoggedInVar">
+        <a routerLink="/login">
+          Login
+        </a>
+      </li>
+      <li *ngIf="!this.authenticationService.isLoggedInVar">
+        <a routerLink="/registration">
+          Register
+        </a>
+      </li>
+      <li *ngIf="this.authenticationService.isLoggedInVar">
+        <a routerLink="/user">
+          User
+        </a>
+      </li>
+      <li *ngIf="this.authenticationService.isAdminVar">
+        <a routerLink="/add-mobile">
+          Add mobile
+        </a>
+      </li>
+      <li *ngIf="this.authenticationService.isLoggedInVar">
+        <a routerLink="." (click)="logout()">
+          Log out
+        </a>
+      </li>
+    </ul>
+  </div>
+
+  <div>
+    <a routerLink="/cart">
+      <mat-icon fontIcon="shopping_cart" color="accent"></mat-icon>
+
+    </a>
+  </div>
+
+  <div id="search">
+    <form [formGroup]="searchForm" (ngSubmit)="onSubmit()">
+      <input formControlName="search" type="text" placeholder="Search"/>
+      <button mat-fab color="accent" type="submit">
+        <mat-icon color="primary" fontIcon="search"></mat-icon>
+      </button>
+    </form>
+  </div>
+</mat-toolbar>

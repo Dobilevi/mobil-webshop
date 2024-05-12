@@ -1,0 +1,19 @@
+
+<div id="mobiles-container">
+  <div class="mobile" *ngFor="let mobile of mobiles">
+    <a routerLink="/mobile/{{mobile.modelName}}">
+      <img src="/assets/images/{{mobile.picture}}" [alt]="mobile.name"/>
+    </a>
+    <a routerLink="/mobile/{{mobile.modelName}}">
+      <b>{{mobile.name}}</b>
+    </a>
+    <div class="price">
+      <a routerLink="/mobile/{{mobile.modelName}}">
+        {{mobile.price}} Ft
+      </a>
+      <button mat-fab color="primary" (click)="addToCart(mobile)">
+        <mat-icon fontIcon="shopping_cart"></mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,56 @@
+
+<div id="cart-container">
+  <table mat-table [dataSource]="cart">
+    <ng-container matColumnDef="image">
+      <th mat-header-cell *matHeaderCellDef>
+        Image
+      </th>
+      <td mat-cell *matCellDef="let item">
+        <a routerLink="/mobile/{{item.modelName}}">
+          <img src="/assets/images/" alt="{{item.modelName}}"/>
+        </a>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>
+        Name
+      </th>
+      <td mat-cell *matCellDef="let item">
+        <a routerLink="/mobile/{{item.modelName}}">
+          {{item.modelName}}
+        </a>
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="quantity">
+      <th mat-header-cell *matHeaderCellDef>
+        Quantity
+      </th>
+      <td mat-cell *matCellDef="let item">
+        {{item.quantity}}
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef>
+        Delete
+      </th>
+      <td mat-cell *matCellDef="let item">
+        <button mat-fab type="button" (click)="removeCartItem(item)">
+          <mat-icon fontIcon="delete"></mat-icon>
+        </button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns"></tr>
+    <tr mat-footer-row *matFooterRowDef="[]"></tr>
+  </table>
+
+  <div id="purchase">
+    <button mat-raised-button color="primary" type="button" (click)="purchase()">
+      Purchase
+    </button>
+  </div>
+</div>

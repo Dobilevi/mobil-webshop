@@ -1,0 +1,72 @@
+
+<div id="mobile-container">
+  <div id="mobile-data">
+    <h2>
+      {{mobile?.name}}
+    </h2>
+    <img src="/assets/images/{{mobile?.picture}}" alt="{{mobile?.name}}"/>
+    <p>
+      Model name: {{mobile?.modelName}}
+    </p>
+
+    <p>
+      On stock: {{mobile?.stock}}
+    </p>
+    <div id="price">
+      {{mobile?.price}} Ft
+      <button mat-fab (click)="onClick()">
+        <mat-icon fontIcon="shopping_cart"></mat-icon>
+      </button>
+      <button mat-fab color="warn" *ngIf="this.authenticationService.isAdminVar" (click)="deleteMobile()">
+        <mat-icon fontIcon="delete"></mat-icon>
+      </button>
+    </div>
+  </div>
+
+   <div id="update-mobile" *ngIf="this.authenticationService.isAdminVar">
+     <form [formGroup]="updateMobileForm" (ngSubmit)="updateMobile()" *ngIf="true">
+       <label fxLayout fxLayoutAlign="space-between center">
+         Price:
+         <input formControlName="price" type="number"/>
+       </label>
+       <label fxLayout fxLayoutAlign="space-between center">
+         Stock:
+         <input formControlName="stock" type="number"/>
+       </label>
+       <button mat-raised-button type="submit">
+         Edit
+       </button>
+     </form>
+   </div>
+
+  <div id="add-review" *ngIf="this.authenticationService.isLoggedInVar">
+    <form [formGroup]="reviewForm" (ngSubmit)="onSubmit()">
+      <label fxLayout fxLayoutAlign="space-between center">
+        Score:
+        <input formControlName="score" type="number" min="1" max="5"/>
+      </label>
+      <label fxLayout fxLayoutAlign="space-between center">
+        Review:
+        <textarea formControlName="text" cols="50"></textarea>
+      </label>
+      <button mat-raised-button type="submit">
+        Add review
+      </button>
+    </form>
+  </div>
+
+  <h2>
+    Reviews
+  </h2>
+
+  <div id="reviews">
+    <div class="review" *ngFor="let review of reviews">
+      User: {{review.userEmail}}<br/>
+      Score: {{review.score}}/5<br/>
+      Review:
+      <p>
+        {{review.text}}
+      </p>
+    </div>
+  </div>
+</div>

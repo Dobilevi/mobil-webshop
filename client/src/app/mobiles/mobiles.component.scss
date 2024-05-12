@@ -1,0 +1,46 @@
+
+#mobiles-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  margin-top: 150px;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+  gap: 20px;
+}
+
+img {
+  width: 200px;
+  height: 200px;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.mobile {
+  padding: 5px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid black;
+  border-radius: 10px;
+  gap: 10px;
+}
+
+button {
+  $button-size: 35px;
+  width: $button-size;
+  height: $button-size;
+}
+
+.price {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}

@@ -1,0 +1,89 @@
+
+#mobile-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 100px;
+  margin-bottom: 50px;
+  gap: 20px;
+}
+
+#mobile-data {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+#price {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+img {
+  height: 500px;
+}
+
+#add-review > form {
+  width: 490px;
+}
+
+#update-mobile > form, #add-review > form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  border: 2px solid black;
+  padding: 10px;
+  gap: 10px;
+}
+
+#update-mobile input, #add-review input {
+  padding: 5px;
+  border: 2px solid black;
+  border-radius: 10px;
+}
+
+label {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+textarea {
+  border-radius: 10px;
+  border: 2px solid black;
+  resize: vertical;
+  min-height: 50px;
+}
+
+#reviews {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+#reviews > div {
+  padding: 5px;
+  border-radius: 10px;
+  border: 2px solid black;
+  width: 500px;
+}
+
+#reviews p {
+  overflow-wrap: break-word;
+  min-height: 20px;
+  border-radius: 10px;
+  border: 2px solid black;
+  padding: 5px;
+}

@@ -1,0 +1,13 @@
+
+<div>
+  <h1>
+    Login
+  </h1>
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <input formControlName="email" type="email" placeholder="E-Mail" required/>
+    <input formControlName="password" type="password" placeholder="Password" required/>
+    <button mat-raised-button color="accent" type="submit">
+      Submit
+    </button>
+  </form>
+</div>

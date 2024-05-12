@@ -1,0 +1,49 @@
+
+<div id="user-container">
+  <h2>
+    User information
+  </h2>
+  <form [formGroup]="updateUserForm" (ngSubmit)="onSubmit()">
+    <label fxLayout fxLayoutAlign="space-between center">
+      Username:
+      <input formControlName="username" type="text"/>
+    </label>
+
+    <label fxLayout fxLayoutAlign="space-between center">
+      E-Mail:
+      <input type="email" disabled [value]="user.email"/>
+    </label>
+
+    <label fxLayout fxLayoutAlign="space-between center">
+      Name:
+      <input formControlName="name" type="text"/>
+    </label>
+
+    <label fxLayout fxLayoutAlign="space-between center">
+      Address:
+      <input formControlName="address" type="text"/>
+    </label>
+
+    <label fxLayout fxLayoutAlign="space-between center">
+      New password:
+      <input formControlName="password" type="password" />
+    </label>
+
+    <label fxLayout fxLayoutAlign="space-between center">
+      Confirm password:
+      <input formControlName="confirmPassword" type="password" />
+    </label>
+
+    <div id="buttons" fxLayout fxLayoutAlign="space-between center">
+      <button mat-raised-button type="submit">
+        Submit
+      </button>
+      <button mat-button color="warn" type="button" (click)="logout()">
+        Log out
+      </button>
+      <button mat-raised-button color="warn" type="button" (click)="deleteUser()">
+        Delete account
+      </button>
+    </div>
+  </form>
+</div>

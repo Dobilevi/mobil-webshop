@@ -1,0 +1,62 @@
+
+mat-toolbar {
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+div {
+  margin: 0;
+}
+
+ul {
+  padding: 0;
+  margin: 0;
+}
+
+li {
+  margin: 0;
+  float: left;
+  list-style: none;
+  padding: 10px;
+  background-color: lightblue;
+}
+
+li:hover {
+  background-color: dodgerblue;
+}
+
+$border-radius: 10px;
+
+li:first-child {
+  border-top-left-radius: $border-radius;
+  border-bottom-left-radius: $border-radius;
+}
+
+li:last-child {
+  border-top-right-radius: $border-radius;
+  border-bottom-right-radius: $border-radius;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#search input {
+  border-radius: 10px;
+}
+
+#search button {
+  $button-size: 30px;
+  width: $button-size;
+  height: $button-size;
+  border-radius: 15px;
+}
+
+form {
+  display: flex;
+  gap: 5px;
+}
