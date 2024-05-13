@@ -61,7 +61,7 @@
 
   <div id="reviews">
     <div class="review" *ngFor="let review of reviews">
-      User: {{review.userEmail}}<br/>
+      User: {{review.user[0].name}}<br/>
       Score: {{review.score}}/5<br/>
       Review:
       <p>

@@ -14,4 +14,6 @@ const ReviewSchema: Schema<IReview> = new mongoose.Schema({
     text: { type: String, required: true }
 });
 
+ReviewSchema.index({ userEmail: 1, modelName: 1 }, { unique: true });
+
 export const Review: Model<IReview> = mongoose.model<IReview>('Review', ReviewSchema);

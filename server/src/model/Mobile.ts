@@ -11,7 +11,7 @@ interface IMobile extends Document {
 
 const MobileSchema: Schema<IMobile> = new mongoose.Schema({
     name: { type: String, required: true },
-    modelName: { type: String, required: true },
+    modelName: { type: String, required: true, unique: true },
     company: { type: String, required: true },
     picture: { type: String, required: true },
     price: { type: Number, required: true },

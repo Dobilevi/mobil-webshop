@@ -82,15 +82,8 @@ export class AuthenticationService {
     if (user.username) {
       body.set('username', user.username);
     }
-    if (user.name) {
-      body.set('name', user.name);
-    }
-    if (user.address) {
-      body.set('address', user.address);
-    }
-    if (user.password) {
-      body.set('password', user.password);
-    }
+    body.set('name', user.name);
+    body.set('address', user.address);
 
     const headers = new HttpHeaders({
       'Content-Type': 'application/x-www-form-urlencoded'

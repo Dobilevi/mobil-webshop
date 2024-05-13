@@ -1,8 +1,8 @@
 import {CommonModule, NgOptimizedImage} from "@angular/common";
-import {Component, OnInit} from '@angular/core';
+import {Component, inject, OnInit} from '@angular/core';
 import {MobileService} from "../shared/services/mobile.service";
 import {Mobile} from "../shared/model/Mobile";
-import {ActivatedRoute, RouterLink} from "@angular/router";
+import {ActivatedRoute, ParamMap, Router, RouterLink} from "@angular/router";
 import {CartService} from "../shared/services/cart.service";
 import {AuthenticationService} from "../shared/services/authentication.service";
 import {MatButton, MatFabButton} from "@angular/material/button";
@@ -16,6 +16,7 @@ import {MatIcon} from "@angular/material/icon";
   styleUrl: './mobiles.component.scss'
 })
 export class MobilesComponent implements OnInit {
+  router = inject(Router);
   searchString!: string | null;
   mobiles: Mobile[] = [];
 
@@ -24,8 +25,13 @@ export class MobilesComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.searchString = this.route.snapshot.paramMap.get('search');
+    this.route.paramMap.subscribe((paramMap: ParamMap) => {
+      this.searchString = paramMap.get('search');
+      this.update();
+    });
+  }
 
+  update() {
     this.mobileService.getAll((this.searchString) ? (this.searchString) : ("")).subscribe({
       next: (data) => {
         if (data) {
@@ -38,6 +44,7 @@ export class MobilesComponent implements OnInit {
   }
 
   addToCart(mobile: Mobile) {
+    if (this.authenticationService.isLoggedInVar) {
       this.cartService.addToCart(mobile.modelName, 1).subscribe({
         next: (data) => {
           console.log(data);
@@ -45,5 +52,9 @@ export class MobilesComponent implements OnInit {
           console.log(err);
         }
       });
+    } else {
+      console.log("User is not logged in");
+      this.router.navigateByUrl('/login');
+    }
   }
 }

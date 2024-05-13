@@ -11,4 +11,5 @@ const ReviewSchema = new mongoose_1.default.Schema({
     score: { type: Number, required: true },
     text: { type: String, required: true }
 });
+ReviewSchema.index({ userEmail: 1, modelName: 1 }, { unique: true });
 exports.Review = mongoose_1.default.model('Review', ReviewSchema);
