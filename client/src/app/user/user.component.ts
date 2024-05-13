@@ -53,18 +53,19 @@ export class UserComponent implements OnInit {
   }
 
   onSubmit(): void {
-    const confirmPassword = this.updateUserForm.get('confirmPassword')?.value;
+    if (this.updateUserForm.valid) {
+      const name = this.updateUserForm.get('name')?.value;
+      const address = this.updateUserForm.get('address')?.value;
 
-    const updatedUser: User = {
-      username: this.updateUserForm.get('username')?.value,
-      email: "",
-      name: this.updateUserForm.get('name')?.value,
-      address: this.updateUserForm.get('address')?.value,
-      password: this.updateUserForm.get('password')?.value,
-      admin: false
-    };
+      const updatedUser: User = {
+        username: this.updateUserForm.get('username')?.value,
+        email: '',
+        name: (name) ? (name) : (''),
+        address: (address) ? (address) : (''),
+        password: '',
+        admin: false
+      };
 
-    if (updatedUser.password === confirmPassword) {
       this.authenticationService.updateUser(updatedUser).subscribe({
         next: (data) => {
           console.log(data);
@@ -73,7 +74,7 @@ export class UserComponent implements OnInit {
         }
       });
     } else {
-      console.log('Passwords do not match');
+      console.log('Form is not valid');
     }
   }
 

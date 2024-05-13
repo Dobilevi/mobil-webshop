@@ -13,6 +13,10 @@ sudo docker start mobil_webshop_mongo_container
 
 sudo docker restart mobil_webshop_mongo_container
 
+# General
+
+nvm use 18
+
 # Server
 
 cd server
@@ -46,3 +50,7 @@ Password: admin
 E-Mail: ivan@test.com
 
 Password: password
+
+# Registration
+
+Password needs to be at least 8 characters long.

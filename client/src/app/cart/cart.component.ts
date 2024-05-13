@@ -6,7 +6,7 @@ import {MatIcon} from "@angular/material/icon";
 import {
   MatCell,
   MatCellDef,
-  MatColumnDef, MatFooterRow, MatFooterRowDef,
+  MatColumnDef, MatFooterCell, MatFooterCellDef, MatFooterRow, MatFooterRowDef,
   MatHeaderCell,
   MatHeaderCellDef,
   MatHeaderRow, MatHeaderRowDef, MatRow, MatRowDef,
@@ -15,6 +15,7 @@ import {
 import {RouterLink} from "@angular/router";
 import {MatButton, MatFabButton} from "@angular/material/button";
 import {update} from "@angular-devkit/build-angular/src/tools/esbuild/angular/compilation/parallel-worker";
+import {CartItem_Mobile} from "../shared/model/CartItem_Mobile";
 
 @Component({
   selector: 'app-cart',
@@ -36,14 +37,18 @@ import {update} from "@angular-devkit/build-angular/src/tools/esbuild/angular/co
     MatFabButton,
     MatFooterRow,
     MatFooterRowDef,
-    MatButton
+    MatButton,
+    MatFooterCell,
+    MatFooterCellDef
   ],
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.scss'
 })
 export class CartComponent implements OnInit {
-  columns = ['image', 'name', 'quantity', 'delete'];
-  cart: CartItem[] = [];
+  columns = ['image', 'name', 'price', 'quantity', 'delete'];
+  cart: CartItem_Mobile[] = [];
+  priceSum: number = 0;
+  quantitySum: number = 0;
 
   constructor(private cartService: CartService) {
 
@@ -55,9 +60,15 @@ export class CartComponent implements OnInit {
 
   update() {
     this.cartService.getCart().subscribe({
-      next: (data: CartItem[]) => {
+      next: (data: CartItem_Mobile[]) => {
         this.cart = data;
-      }, error: err => {
+        this.priceSum = 0;
+        this.quantitySum = 0;
+        for (const cartItem of data) {
+          this.priceSum += cartItem.quantity * cartItem.mobile[0].price;
+          this.quantitySum += cartItem.quantity;
+        }
+      }, error: (err) => {
         console.log(err);
       }
     });

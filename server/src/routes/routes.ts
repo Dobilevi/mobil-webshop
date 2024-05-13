@@ -9,7 +9,6 @@ export const configureRoutes = (passport: PassportStatic, router: Router): Route
     router.post('/login', (req: Request, res: Response, next: NextFunction) => {
         passport.authenticate('local', (error: string | null, user: typeof User) => {
             if (error) {
-                console.log(error);
                 res.status(500).send(error);
             } else {
                 if (!user) {
@@ -17,7 +16,6 @@ export const configureRoutes = (passport: PassportStatic, router: Router): Route
                 } else {
                     req.login(user, (err: string | null) => {
                         if (err) {
-                            console.log(err);
                             res.status(500).send('Internal server error.');
                         } else {
                             res.status(200).send(user);
@@ -49,7 +47,6 @@ export const configureRoutes = (passport: PassportStatic, router: Router): Route
         if (req.isAuthenticated()) {
             req.logout((error) => {
                 if (error) {
-                    console.log(error);
                     res.status(500).send('Internal server error.');
                 }
                 res.status(200).send('Successfully logged out.');
@@ -106,9 +103,6 @@ export const configureRoutes = (passport: PassportStatic, router: Router): Route
             }
             if ((req.body.address !== undefined) && (req.body.address !== null)) {
                 updatedUser.address = req.body.address;
-            }
-            if (req.body.password) {
-                updatedUser.password = req.body.password;
             }
 
             const query = User.updateOne({'email': email}, {$set: updatedUser});
@@ -174,7 +168,6 @@ export const configureRoutes = (passport: PassportStatic, router: Router): Route
         Mobile.find(filter).then(mobile => {
             res.status(200).send(mobile);
         }).catch(error => {
-            console.log(error);
             res.status(500).send('Internal server error.');
         });
     });
@@ -196,9 +189,9 @@ export const configureRoutes = (passport: PassportStatic, router: Router): Route
                 const modelName = req.params.modelName;
 
                 CartItem.deleteMany({ modelName: modelName }).then(data => {
-
+                    console.log('Delete success.');
                 }).catch(error => {
-
+                    console.log(error);
                 });
 
                 Mobile.deleteOne({ modelName: modelName }).then(data => {
@@ -222,8 +215,11 @@ export const configureRoutes = (passport: PassportStatic, router: Router): Route
         if (req.isAuthenticated()) {
             if (req.user) {
                 const email = (req.user as IUser)['email'];
-                CartItem.find({userEmail: email}).then(cartItem => {
-                    res.status(200).send(cartItem);
+                CartItem.aggregate([
+                    { $match: { userEmail: email } },
+                    { $lookup: { from: Mobile.collection.collectionName, localField: 'modelName', foreignField: 'modelName', as: 'mobile' } }
+                ]).then((data) => {
+                    res.status(200).send(data);
                 }).catch(error => {
                     res.status(500).send('Internal server error.');
                 });
@@ -262,7 +258,6 @@ export const configureRoutes = (passport: PassportStatic, router: Router): Route
                                     const cartQuantity = currentQuantity + quantity;
 
                                     CartItem.updateOne({userEmail: userEmail, modelName: modelName}, {quantity: cartQuantity}).then(data => {
-
                                         console.log('Added to cart');
                                     }).catch(error => {
                                         console.log(error);
@@ -397,20 +392,13 @@ export const configureRoutes = (passport: PassportStatic, router: Router): Route
         const modelName = req.params.modelName;
 
         Review.aggregate([
-            {$match: { modelName: modelName }},
-            { $lookup: {from: 'User', localField: 'userEmail', foreignField: 'email', as: 'reviews'} }
+            { $match: { modelName: modelName } },
+            { $lookup: { from: User.collection.collectionName, localField: 'userEmail', foreignField: 'email', as: 'user' } }
         ]).then((data) => {
             res.status(200).send(data);
         }).catch(error => {
             res.status(500).send('Internal server error.');
         });
-
-        // Review.find({modelName: modelName}).then((data) => {
-        //     res.status(200).send(data);
-        // }).catch(error => {
-        //     console.log(error);
-        //     res.status(500).send();
-        // });
     });
 
     router.post('/addReview', (req: Request, res: Response) => {

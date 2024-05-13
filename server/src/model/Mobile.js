@@ -7,7 +7,7 @@ exports.Mobile = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
 const MobileSchema = new mongoose_1.default.Schema({
     name: { type: String, required: true },
-    modelName: { type: String, required: true },
+    modelName: { type: String, required: true, unique: true },
     company: { type: String, required: true },
     picture: { type: String, required: true },
     price: { type: Number, required: true },

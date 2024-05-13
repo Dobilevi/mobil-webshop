@@ -84,6 +84,7 @@ export class MobileComponent implements OnInit {
   updateReviews() {
     this.reviewService.getReviewsByMobile(this.modelName).subscribe({
       next: (reviews) => {
+        console.log(reviews);
         this.reviews = reviews;
       }, error: (err) => {
         console.log(err);
@@ -103,6 +104,7 @@ export class MobileComponent implements OnInit {
       });
     } else {
       console.log('User is not logged in.');
+      this.router.navigateByUrl('/login');
     }
   }
 

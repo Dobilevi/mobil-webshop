@@ -9,7 +9,6 @@ const configureRoutes = (passport, router) => {
     router.post('/login', (req, res, next) => {
         passport.authenticate('local', (error, user) => {
             if (error) {
-                console.log(error);
                 res.status(500).send(error);
             }
             else {
@@ -19,7 +18,6 @@ const configureRoutes = (passport, router) => {
                 else {
                     req.login(user, (err) => {
                         if (err) {
-                            console.log(err);
                             res.status(500).send('Internal server error.');
                         }
                         else {
@@ -48,7 +46,6 @@ const configureRoutes = (passport, router) => {
         if (req.isAuthenticated()) {
             req.logout((error) => {
                 if (error) {
-                    console.log(error);
                     res.status(500).send('Internal server error.');
                 }
                 res.status(200).send('Successfully logged out.');
@@ -105,9 +102,6 @@ const configureRoutes = (passport, router) => {
             }
             if ((req.body.address !== undefined) && (req.body.address !== null)) {
                 updatedUser.address = req.body.address;
-            }
-            if (req.body.password) {
-                updatedUser.password = req.body.password;
             }
             const query = User_1.User.updateOne({ 'email': email }, { $set: updatedUser });
             query.then(user => {
@@ -170,7 +164,6 @@ const configureRoutes = (passport, router) => {
         Mobile_1.Mobile.find(filter).then(mobile => {
             res.status(200).send(mobile);
         }).catch(error => {
-            console.log(error);
             res.status(500).send('Internal server error.');
         });
     });
@@ -188,7 +181,9 @@ const configureRoutes = (passport, router) => {
             if (req.user.admin) {
                 const modelName = req.params.modelName;
                 CartItem_1.CartItem.deleteMany({ modelName: modelName }).then(data => {
+                    console.log('Delete success.');
                 }).catch(error => {
+                    console.log(error);
                 });
                 Mobile_1.Mobile.deleteOne({ modelName: modelName }).then(data => {
                     if (data.deletedCount !== 0) {
@@ -213,8 +208,11 @@ const configureRoutes = (passport, router) => {
         if (req.isAuthenticated()) {
             if (req.user) {
                 const email = req.user['email'];
-                CartItem_1.CartItem.find({ userEmail: email }).then(cartItem => {
-                    res.status(200).send(cartItem);
+                CartItem_1.CartItem.aggregate([
+                    { $match: { userEmail: email } },
+                    { $lookup: { from: Mobile_1.Mobile.collection.collectionName, localField: 'modelName', foreignField: 'modelName', as: 'mobile' } }
+                ]).then((data) => {
+                    res.status(200).send(data);
                 }).catch(error => {
                     res.status(500).send('Internal server error.');
                 });
@@ -376,18 +374,12 @@ const configureRoutes = (passport, router) => {
         const modelName = req.params.modelName;
         Review_1.Review.aggregate([
             { $match: { modelName: modelName } },
-            { $lookup: { from: 'User', localField: 'userEmail', foreignField: 'email', as: 'reviews' } }
+            { $lookup: { from: User_1.User.collection.collectionName, localField: 'userEmail', foreignField: 'email', as: 'user' } }
         ]).then((data) => {
             res.status(200).send(data);
         }).catch(error => {
             res.status(500).send('Internal server error.');
         });
-        // Review.find({modelName: modelName}).then((data) => {
-        //     res.status(200).send(data);
-        // }).catch(error => {
-        //     console.log(error);
-        //     res.status(500).send();
-        // });
     });
     router.post('/addReview', (req, res) => {
         if (req.isAuthenticated()) {

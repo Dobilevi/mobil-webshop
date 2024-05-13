@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {CartItem} from "../model/CartItem";
+import {CartItem_Mobile} from "../model/CartItem_Mobile";
 import {AuthenticationService} from "./authentication.service";
 
 @Injectable({
@@ -13,7 +14,7 @@ export class CartService {
   }
 
   getCart() {
-    return this.http.get<CartItem[]>('http://localhost:5000/app/getCart', { withCredentials: true });
+    return this.http.get<CartItem_Mobile[]>('http://localhost:5000/app/getCart', { withCredentials: true });
   }
 
   addToCart(modelName: string, quantity: number) {

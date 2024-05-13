@@ -7,8 +7,11 @@
       </th>
       <td mat-cell *matCellDef="let item">
         <a routerLink="/mobile/{{item.modelName}}">
-          <img src="/assets/images/" alt="{{item.modelName}}"/>
+          <img src="/assets/images/{{item.mobile[0].picture}}" alt="{{item.modelName}}"/>
         </a>
+      </td>
+      <td mat-footer-cell *matFooterCellDef>
+
       </td>
     </ng-container>
 
@@ -18,8 +21,23 @@
       </th>
       <td mat-cell *matCellDef="let item">
         <a routerLink="/mobile/{{item.modelName}}">
-          {{item.modelName}}
+          {{item.mobile[0].name}}
         </a>
+      </td>
+      <td mat-footer-cell *matFooterCellDef>
+
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef>
+        Price
+      </th>
+      <td mat-cell *matCellDef="let item">
+        {{item.mobile[0].price}} Ft
+      </td>
+      <td mat-footer-cell *matFooterCellDef>
+        {{priceSum}} Ft
       </td>
     </ng-container>
 
@@ -29,6 +47,9 @@
       </th>
       <td mat-cell *matCellDef="let item">
         {{item.quantity}}
+      </td>
+      <td mat-footer-cell *matFooterCellDef>
+        {{quantitySum}}
       </td>
     </ng-container>
 
@@ -41,11 +62,14 @@
           <mat-icon fontIcon="delete"></mat-icon>
         </button>
       </td>
+      <td mat-footer-cell *matFooterCellDef>
+
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="columns"></tr>
     <tr mat-row *matRowDef="let row; columns: columns"></tr>
-    <tr mat-footer-row *matFooterRowDef="[]"></tr>
+    <tr mat-footer-row *matFooterRowDef="columns"></tr>
   </table>
 
   <div id="purchase">
